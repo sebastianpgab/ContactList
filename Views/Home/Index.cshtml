@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "Contact List";
+}
+
+<div class="card mt-5">
+    @Html.TextBox("ScreenInput", null, new { @class = "contactList-screen", disabled = "disabled" })
+    <div class="card-header">
+        <h5 class="card-title">Dodaj kontakt</h5>
+        <div class="card-body" style="float:left; width:33%;">
+            <form method="post" action="/Contact/Register" style="max-width:100%;">
+                <div class="form-group">
+                    <label for="FirstName">Imię:</label>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="LastName">Nazwisko:</label>
+                    <input type="text" class="form-control" id="LastName" name="LastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email:</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="Password">Hasło:</label>
+                    <input type="password" class="form-control" id="Password" name="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+            </form>
+            <form method="post" action="/Contact/Login" style="max-width:100%;">
+                <div class="form-group">
+                    <label for="Email">Email:</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="Password">Hasło:</label>
+                    <input type="password" class="form-control" id="Password" name="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Zaloguj się</button>
+            </form>
+        </div>
+    </div>
+    <div class="card-body" style="float:right; width:33%;">
+        <form method="post" action="/Contact/Add" style="max-width:100%;">
+            <div class="form-group">
+                <label for="FirstName">Imię:</label>
+                <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+            </div>
+            <div class="form-group">
+                <label for="LastName">Nazwisko:</label>
+                <input type="text" class="form-control" id="LastName" name="LastName" required>
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" class="form-control" id="Email" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="Password">Hasło:</label>
+                <input type="password" class="form-control" id="Password" name="Password" required>
+            </div>
+            <div class="form-group">
+                <label for="Category">Kategoria:</label>
+                <select class="form-control" id="Category" name="Category" required>
+                    <option value="">Wybierz kategorię</option>
+                    <option value="służbowy">Służbowy</option>
+                    <option value="prywatny">Prywatny</option>
+                    <option value="inny">Inny</option>
+                </select>
+            </div>
+            <div class="form-group subcategory">
+                <label for="Subcategory">Podkategoria:</label>
+                <select class="form-control" id="Subcategory" name="Subcategory">
+                    <option value="">Wybierz podkategorię</option>
+                    <option value="szef">Szef</option>
+                    <option value="klient">Klient</option>
+                    <option value="inne">Inne</option>
+                </select>
+            </div>
+            <div class="form-group subcategory">
+                <label for="OtherSubcategory">Inna podkategoria:</label>
+                <input type="text" class="form-control" id="OtherSubcategory" name="OtherSubcategory"/>
+            </div>
+            <div class="form-group">
+                <label for="Phone">Telefon:</label>
+                <input type="text" class="form-control" id="Phone" name="Phone" required>
+            </div>
+            <div class="form-group">
+                <label for="DateOfBirth">Data urodzenia:</label>
+                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj kontakt</button>
+        </form>
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <h5 class="card-title">Lista kontaktów</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Email</th>
+                        <th>Telefon</th>
+                        <th>Data urodzenia</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contact in Model)
+                    {
+                    <tr>
+                        <td>@contact.FirstName</td>
+                        <td>@contact.LastName</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.Phone</td>
+                        <td>@contact.DateOfBirth.ToShortDateString()</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Contact" , new { id=contact.Id })" class="btn btn-primary">Szczegóły</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <h5 class="card-title">Edycja użytkownika</h5>
+            <div class="card-body" style="float:left; width:33%;">
+                <form method="post" action="/Contact/Update" style="max-width:100%;">
+                    <div class="form-group">
+                        <label for="EmailToUpdate">Podaj adres email użytkownika, który chcesz edytować:</label>
+                        <input type="text" class="form-control" id="EmailToUpdate" name="EmailToUpdate">
+                    </div>
+                    <div class="form-group">
+                        <label for="FirstName">Imię:</label>
+                        <input type="text" class="form-control" id="FirstName" name="FirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">Nazwisko:</label>
+                        <input type="text" class="form-control" id="LastName" name="LastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email:</label>
+                        <input type="email" class="form-control" id="Email" name="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Hasło:</label>
+                        <input type="password" class="form-control" id="Password" name="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="Category">Kategoria:</label>
+                        <select class="form-control" id="Category" name="Category">
+                            <option value="">Wybierz kategorię</option>
+                            <option value="służbowy">Służbowy</option>
+                            <option value="prywatny">Prywatny</option>
+                            <option value="inny">Inny</option>
+                        </select>
+                    </div>
+                    <div class="form-group subcategory">
+                        <label for="Subcategory">Podkategoria:</label>
+                        <select class="form-control" id="Subcategory" name="Subcategory">
+                            <option value="">Wybierz podkategorię</option>
+                            <option value="szef">Szef</option>
+                            <option value="klient">Klient</option>
+                            <option value="inne">Inne</option>
+                        </select>
+                    </div>
+                    <div class="form-group subcategory">
+                        <label for="OtherSubcategory">Inna podkategoria:</label>
+                        <input type="text" class="form-control" id="OtherSubcategory" name="OtherSubcategory">
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">Telefon:</label>
+                        <input type="text" class="form-control" id="Phone" name="Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="DateOfBirth">Data urodzenia:</label>
+                        <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Edytuj kontakt</button>
+                </form>
+            </div>
+            <h5 class="card-title">Usunięcie użytkownika</h5>
+            <div class="card-body" style="float:left; width:33%;">
+                <form method="post" action="/Contact/Delete" style="max-width:100%;">
+                    <div class="form-group">
+                        <label for="EmailToDelete">Podaj adres email użytkownika, którego chcesz usunąć:</label>
+                        <input type="text" class="form-control" id="EmailToDelete" name="EmailToDelete">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Usuń kontakt</button>
+                </form>
+
+            </div>
+        </div>
